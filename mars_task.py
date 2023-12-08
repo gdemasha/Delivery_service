@@ -1,5 +1,12 @@
-# ID успешной посылки: 102342949
+# ID успешной посылки: 102370192
+import sys
+
 from typing import List, Tuple
+
+data = sys.stdin.readline().rstrip()
+weights = [int(x) for x in data.split()]
+limit = sys.stdin.readline().rstrip()
+limit = int(limit)
 
 
 def main(weights: List[int], limit: int) -> int:
@@ -27,3 +34,7 @@ def main(weights: List[int], limit: int) -> int:
 
     platforms = (len(weights) - len(pairs)*UNPACKING_PAIR) + len(pairs)
     return platforms
+
+
+if __name__ == '__main__':
+    print(main(weights, limit))
