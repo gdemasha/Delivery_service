@@ -1,40 +1,36 @@
-# ID успешной посылки: 102370192
+# ID успешной посылки: 102485552
 import sys
 
-from typing import List, Tuple
-
-data = sys.stdin.readline().rstrip()
-weights = [int(x) for x in data.split()]
-limit = sys.stdin.readline().rstrip()
-limit = int(limit)
+from typing import List
 
 
-def main(weights: List[int], limit: int) -> int:
+def platform_counter(weights: List[int], limit: int) -> int:
     """
     Функция, подсчитывающая необходимое количество
     платформ для перевозки грузов.
     """
 
-    UNPACKING_PAIR: int = 2
-
     left_pointer: int = 0
-    right_pointer: int = len(weights) - 1
-    pairs: List[Tuple[int, int]] = []
+    right_pointer: int = len(weights)
+    count: int = 0
 
     weights.sort()
 
     while left_pointer < right_pointer:
-        result = weights[left_pointer] + weights[right_pointer]
-        if result <= limit:
-            pairs.append((left_pointer, right_pointer))
-            right_pointer -= 1
+        right_pointer -= 1
+        if right_pointer == left_pointer:
+            break
+        if weights[left_pointer] + weights[right_pointer] <= limit:
+            count += 1
             left_pointer += 1
-        else:
-            right_pointer -= 1
 
-    platforms = (len(weights) - len(pairs)*UNPACKING_PAIR) + len(pairs)
-    return platforms
+    return len(weights) - count
 
 
 if __name__ == '__main__':
-    print(main(weights, limit))
+    data = sys.stdin.readline().rstrip()
+    weights = [int(weight) for weight in data.split()]
+    limit = sys.stdin.readline().rstrip()
+    limit = int(limit)
+
+    print(platform_counter(weights, limit))
